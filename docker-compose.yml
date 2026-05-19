@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 version: '3.8'
+=======
+version: '3'
+>>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
 
 services:
   mysql:
@@ -15,21 +19,33 @@ services:
   backend:
     build:
       context: ./backend
+<<<<<<< HEAD
     container_name: backend
     environment:
       PORT: 3001
+=======
+    environment:
+>>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
       DB_HOST: mysql
       DB_USER: root
       DB_PASS: yourpassword
       DB_NAME: todo_db
     ports:
+<<<<<<< HEAD
       - "3001:3001"
     depends_on:
       - mysql
+=======
+      - "5000:5000"
+    depends_on:
+      - mysql
+    command: ["npm", "start"]
+>>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
 
   frontend:
     build:
       context: ./frontend
+<<<<<<< HEAD
       args:
         - REACT_APP_API_URL=http://localhost:3001
     container_name: frontend
@@ -37,6 +53,14 @@ services:
       - "8080:80"
     depends_on:
       - backend
+=======
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+>>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
 
 volumes:
   mysql-data:
