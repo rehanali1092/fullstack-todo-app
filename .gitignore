@@ -7,13 +7,12 @@ backend/node_modules
 # Environment variables
 frontend/.env
 backend/.env
-<<<<<<< HEAD
 .env
 .env.*
 **/.env
 **/.env.*
-=======
->>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
+
+
 
 # Logs
 *.log
