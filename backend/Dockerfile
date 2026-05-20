@@ -1,57 +1,48 @@
-<<<<<<< HEAD
-# Stage 1: Build stage
+# ============================================================
+# Stage 1 - Build TypeScript application
+# ============================================================
+
 FROM node:18-alpine AS builder
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package files first for layer caching
 COPY package*.json ./
+
+# Install all dependencies including devDependencies
 RUN npm ci
 
-# Copy rest of the application source code
+# Copy source code
 COPY . .
 
-# Run TypeScript build to generate the dist folder
+# Build TypeScript → dist/
 RUN npm run build
 
-# Stage 2: Production stage (smaller final image)
+# ============================================================
+# Stage 2 - Production image
+# ============================================================
+
 FROM node:18-alpine
+
+# Set working directory
 WORKDIR /app
 
-# Copy package files and install only production dependencies
+# Copy package files
 COPY package*.json ./
+
+# Install ONLY production dependencies
 RUN npm ci --only=production
 
-# Copy built code from the builder stage
+# Copy compiled dist folder from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Expose the port the app runs on
+# App Service will route traffic to this port
 EXPOSE 3001
 
-# Start the application
-=======
-# Use an official Node.js runtime as the base image
-FROM node:16
+# Environment
+ENV NODE_ENV=production
+ENV PORT=3001
 
-# Set the working directory to /app
-WORKDIR /app
-
-# Copy the package.json and package-lock.json to install dependencies
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
-COPY . .
-
-# Run TypeScript build to generate the dist folder
-RUN npm run build  # Make sure this command generates the dist folder
-
-# Expose the backend port
-EXPOSE 5000
-
-# Start the server
->>>>>>> 14ce64eb513b29b3c7ef325765c59590c858231b
+# Start backend server
 CMD ["node", "dist/server.js"]
