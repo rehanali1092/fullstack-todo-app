@@ -67,7 +67,7 @@ fullstack-todo-app/
 ├── .azure/
 │   ├── backend-pipeline.yml
 │   └── frontend-pipeline.yml
-├── screenshots/           ← add your screenshots here
+├── screenshots/          
 │   ├── pipeline-success.png
 │   └── acr-images.png
 └── README.md
